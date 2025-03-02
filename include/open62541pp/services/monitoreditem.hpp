@@ -175,7 +175,11 @@ auto createMonitoredItemsDataChangeAsync(
     );
     return detail::AsyncServiceAdapter<CreateMonitoredItemsResponse>::initiate(
         connection,
+#if (UA_OPEN62541_VER_MAJOR == 1 && UA_OPEN62541_VER_MINOR == 4 && UA_OPEN62541_VER_PATCH >= 9) || (UA_OPEN62541_VER_MAJOR == 1 && UA_OPEN62541_VER_MINOR > 4) || UA_OPEN62541_VER_MAJOR > 1
+        [&](UA_ClientAsyncCreateMonitoredItemsCallback callback, void* userdata) {
+#else
         [&](UA_ClientAsyncServiceCallback callback, void* userdata) {
+#endif
             throwIfBad(UA_Client_MonitoredItems_createDataChanges_async(
                 opcua::detail::getHandle(connection),
                 asNative(request),
@@ -304,7 +308,11 @@ auto createMonitoredItemsEventAsync(
     );
     return detail::AsyncServiceAdapter<CreateMonitoredItemsResponse>::initiate(
         connection,
+#if (UA_OPEN62541_VER_MAJOR == 1 && UA_OPEN62541_VER_MINOR == 4 && UA_OPEN62541_VER_PATCH >= 9) || (UA_OPEN62541_VER_MAJOR == 1 && UA_OPEN62541_VER_MINOR > 4) || UA_OPEN62541_VER_MAJOR > 1
+        [&](UA_ClientAsyncCreateMonitoredItemsCallback callback, void* userdata) {
+#else
         [&](UA_ClientAsyncServiceCallback callback, void* userdata) {
+#endif
             throwIfBad(UA_Client_MonitoredItems_createEvents_async(
                 opcua::detail::getHandle(connection),
                 asNative(request),
@@ -417,7 +425,11 @@ auto modifyMonitoredItemsAsync(
 ) {
     return detail::AsyncServiceAdapter<ModifyMonitoredItemsResponse>::initiate(
         connection,
+#if (UA_OPEN62541_VER_MAJOR == 1 && UA_OPEN62541_VER_MINOR == 4 && UA_OPEN62541_VER_PATCH >= 9) || (UA_OPEN62541_VER_MAJOR == 1 && UA_OPEN62541_VER_MINOR > 4) || UA_OPEN62541_VER_MAJOR > 1
+        [&](UA_ClientAsyncModifyMonitoredItemsCallback callback, void* userdata) {
+#else
         [&](UA_ClientAsyncServiceCallback callback, void* userdata) {
+#endif
             throwIfBad(UA_Client_MonitoredItems_modify_async(
                 opcua::detail::getHandle(connection), asNative(request), callback, userdata, nullptr
             ));
@@ -622,7 +634,11 @@ auto deleteMonitoredItemsAsync(
 ) {
     return detail::AsyncServiceAdapter<DeleteMonitoredItemsResponse>::initiate(
         connection,
+#if (UA_OPEN62541_VER_MAJOR == 1 && UA_OPEN62541_VER_MINOR == 4 && UA_OPEN62541_VER_PATCH >= 9) || (UA_OPEN62541_VER_MAJOR == 1 && UA_OPEN62541_VER_MINOR > 4) || UA_OPEN62541_VER_MAJOR > 1
+        [&](UA_ClientAsyncDeleteMonitoredItemsCallback callback, void* userdata) {
+#else
         [&](UA_ClientAsyncServiceCallback callback, void* userdata) {
+#endif
             throwIfBad(UA_Client_MonitoredItems_delete_async(
                 opcua::detail::getHandle(connection), asNative(request), callback, userdata, nullptr
             ));

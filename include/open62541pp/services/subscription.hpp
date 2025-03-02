@@ -133,7 +133,11 @@ auto createSubscriptionAsync(
     );
     return detail::AsyncServiceAdapter<CreateSubscriptionResponse>::initiate(
         connection,
+#if (UA_OPEN62541_VER_MAJOR == 1 && UA_OPEN62541_VER_MINOR == 4 && UA_OPEN62541_VER_PATCH >= 9) || (UA_OPEN62541_VER_MAJOR == 1 && UA_OPEN62541_VER_MINOR > 4) || UA_OPEN62541_VER_MAJOR > 1
+        [&, context = context.get()](UA_ClientAsyncCreateSubscriptionCallback callback, void* userdata) {
+#else
         [&, context = context.get()](UA_ClientAsyncServiceCallback callback, void* userdata) {
+#endif
             throwIfBad(UA_Client_Subscriptions_create_async(
                 opcua::detail::getHandle(connection),
                 asNative(request),
@@ -216,7 +220,11 @@ auto modifySubscriptionAsync(
 ) {
     return detail::AsyncServiceAdapter<ModifySubscriptionResponse>::initiate(
         connection,
+#if (UA_OPEN62541_VER_MAJOR == 1 && UA_OPEN62541_VER_MINOR == 4 && UA_OPEN62541_VER_PATCH >= 9) || (UA_OPEN62541_VER_MAJOR == 1 && UA_OPEN62541_VER_MINOR > 4) || UA_OPEN62541_VER_MAJOR > 1
+        [&](UA_ClientAsyncModifySubscriptionCallback callback, void* userdata) {
+#else
         [&](UA_ClientAsyncServiceCallback callback, void* userdata) {
+#endif
             throwIfBad(UA_Client_Subscriptions_modify_async(
                 opcua::detail::getHandle(connection), asNative(request), callback, userdata, nullptr
             ));
@@ -339,7 +347,11 @@ auto deleteSubscriptionsAsync(
 ) {
     return detail::AsyncServiceAdapter<DeleteSubscriptionsResponse>::initiate(
         connection,
+#if (UA_OPEN62541_VER_MAJOR == 1 && UA_OPEN62541_VER_MINOR == 4 && UA_OPEN62541_VER_PATCH >= 9) || (UA_OPEN62541_VER_MAJOR == 1 && UA_OPEN62541_VER_MINOR > 4) || UA_OPEN62541_VER_MAJOR > 1
+        [&](UA_ClientAsyncDeleteSubscriptionsCallback callback, void* userdata) {
+#else
         [&](UA_ClientAsyncServiceCallback callback, void* userdata) {
+#endif
             throwIfBad(UA_Client_Subscriptions_delete_async(
                 opcua::detail::getHandle(connection), asNative(request), callback, userdata, nullptr
             ));
